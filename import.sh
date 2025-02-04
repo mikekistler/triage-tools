@@ -15,6 +15,8 @@ fieldId=PVTF_lADOAIt-yc4ArJarzgnNyeQ      # F Score field ID
 awk -F "," '{print $2,$8}' $csv | grep -e "^https" | while read url frustration; do
   # Trim the ^M character from the frustration score
   frustration=$(echo $frustration | tr -d '\r')
+  # Trim frustration score to no more than three decimal places
+  frustration=$(echo $frustration | awk '{printf "%.3f", $1}')
   # drop the decimal
   if (( ${frustration%.*} >= 10 )); then
     echo "Adding $url to the Web Squad .NET 10 Planning project"
